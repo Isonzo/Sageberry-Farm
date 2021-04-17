@@ -18,18 +18,15 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	if Input.is_action_just_pressed("talk") and in_range:
-		if day1_dialogue.size() == talk_counter:
-			$Text.percent_visible = 0
-			$Text.text = day1_dialogue[0]
-			$AnimationPlayer.play("text_roll")
-			talk_counter = 1
-		else:
-			$Text.percent_visible = 0
-			$Text.text = day1_dialogue[talk_counter]
-			$AnimationPlayer.play("text_roll")
-			talk_counter += 1
+		speak()
 
-
+func speak():
+	if day1_dialogue.size() == talk_counter:
+			talk_counter = 0
+	$Text.percent_visible = 0
+	$Text.text = day1_dialogue[talk_counter]
+	$AnimationPlayer.play("text_roll")
+	talk_counter += 1
 
 func _on_Area2D_body_entered(body):
 	if body.name == "Player":

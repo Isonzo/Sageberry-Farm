@@ -3,7 +3,7 @@ extends Node2D
 var in_range = false
 
 var talk_counter = 0
-
+# Dialogues stored here, if it gets too unwieldy we can load a json instead.
 var day1_dialogue = [
 	"Your mother isn't coming this time?",
 	"It's best for her to rest anyway",
@@ -13,6 +13,11 @@ var day1_dialogue = [
 	"I'll even gift you the seeds",
 	"Just this once.",
 	"Don't you have some work to do, now?"
+]
+# Structure for handling dialogues
+var dialogues = [
+	day1_dialogue,
+	
 ]
 
 var default = "Press F to talk"
@@ -24,18 +29,16 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	if Input.is_action_just_pressed("talk") and in_range:
-		$AnimatedSprite.play("talking")
-		if day1_dialogue.size() == talk_counter:
-			$Text.percent_visible = 0
-			$Text.text = day1_dialogue[day1_dialogue.size() - 1]
-			$AnimationPlayer.play("text_roll")
-		else:
-			$Text.percent_visible = 0
-			$Text.text = day1_dialogue[talk_counter]
-			$AnimationPlayer.play("text_roll")
-			talk_counter += 1
+		speak()
 
-
+func speak():
+	$AnimatedSprite.play("talking")
+	if day1_dialogue.size() == talk_counter:
+		talk_counter -= 1
+	$Text.percent_visible = 0
+	$Text.text = day1_dialogue[talk_counter]
+	$AnimationPlayer.play("text_roll")
+	talk_counter += 1
 
 func _on_Area2D_body_entered(body):
 	if body.name == "Player":

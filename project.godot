@@ -20,6 +20,10 @@ run/main_scene="res://scenes/Places/Test.tscn"
 boot_splash/use_filter=false
 config/icon="res://icon.png"
 
+[autoload]
+
+Global="*res://Global.gd"
+
 [display]
 
 window/size/width=256
