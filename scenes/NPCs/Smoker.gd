@@ -35,10 +35,12 @@ func speak():
 	$AnimatedSprite.play("talking")
 	if day1_dialogue.size() == talk_counter:
 		talk_counter -= 1
-	$Text.percent_visible = 0
-	$Text.text = day1_dialogue[talk_counter]
-	$AnimationPlayer.play("text_roll")
+	talk(talk_counter)
 	talk_counter += 1
+func talk(counter):
+	$Text.percent_visible = 0
+	$Text.text = dialogues[Global.day - 1][counter]
+	$AnimationPlayer.play("text_roll")
 
 func _on_Area2D_body_entered(body):
 	if body.name == "Player":
